@@ -70,11 +70,11 @@ public class Player extends Ship implements ProcessingInteractive {
 			this.downK = true;
 		}
 		if(key == ' ') {
-			parent.println("Fire ");
+			//parent.println("Fire ");
 			Bullet b = new Bullet(parent);
 			this.gameManager.addObject(b);
 			b.position = this.position.copy();
-			b.velocity.rotate(this.heading - PApplet.TWO_PI);
+			b.velocity.rotate(this.heading);
 			b.velocity.setMag(b.speed);
 		}
 	}
