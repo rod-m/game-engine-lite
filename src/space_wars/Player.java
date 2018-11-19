@@ -6,69 +6,84 @@ import processing.core.PVector;
 
 public class Player extends Ship implements ProcessingInteractive {
 	public PVector size;
-	public float speed = 5f;
-	float speedDiagonal = 5f;
+	public float acceleration = 1.2f;
+	public float friction = 0.85f;
+	public float maxSpeed = 5f;
+	float heading = PApplet.TWO_PI;
 	private boolean upK = false;
 	private boolean downK = false;
 	private boolean leftK = false;
 	private boolean rightK = false;
+
 	public Player(PApplet p, float x, float y, float w, float h) {
 		super(p);
 		this.position = new PVector(x, y);
 		this.size = new PVector(w, h);
-		this.speedDiagonal = speed / 1.4f;
 	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update() {
-		if( this.upK && this.rightK) {
-			this.position.x += this.speedDiagonal;
-			this.position.y += this.speedDiagonal;
-		}else if (this.upK) {
-			this.position.y -= speed;
-		}else if (this.downK) {
-			this.position.y += speed;
-		} else if(this.leftK) {
-			this.position.x -= speed;
-		} else if(this.rightK) {
-			this.position.x += speed;
+		this.forceDir = new PVector(0, 0);
+		if (this.upK) {
+			this.forceDir.y = -1f;
+		} else if (this.downK) {
+			this.forceDir.y = 1f;
 		}
+		if (this.leftK) {
+			this.forceDir.x = -1f;
+		} else if (this.rightK) {
+			this.forceDir.x = 1f;
+		}
+		// keep speed uniform if on an angle
+		this.forceDir.setMag(this.acceleration);
+
+		if (this.velocity.mag() < this.maxSpeed) {
+			this.velocity.add(this.forceDir);
+
+		}
+		this.position.add(this.velocity);
+		this.velocity.mult(this.friction); // slow down rate
+		this.heading = this.velocity.heading() + PApplet.HALF_PI;
 	}
 
+	/*
+	 * using boolean vars for key pressed allows for multi key diagonal directions
+	 */
 	public void keyPressed(char key, int keyCode) {
-
-		if (key == 'a' || key == 'A') {
+		// parent.println("velocity "+ this.velocity.toString());
+		// parent.println("forceDir "+ this.forceDir.toString());
+		if (keyCode == PApplet.LEFT) {
 			this.leftK = true;
 		}
-		if (key == 'd' || key == 'D') {
+		if (keyCode == PApplet.RIGHT) {
 			this.rightK = true;
 		}
-		if (key == 'w' || key == 'W') {
+		if (keyCode == PApplet.UP) {
 			this.upK = true;
 		}
-		if (key == 's' || key == 'S') {
+		if (keyCode == PApplet.DOWN) {
 			this.downK = true;
 		}
-
+		
 	}
-	public void keyReleased(char key, int keyCode) {
 
-		if (key == 'a' || key == 'A') {
+	public void keyReleased(char key, int keyCode) {
+		/* boolean key down switched off when key released! */
+		if (keyCode == PApplet.LEFT) {
 			this.leftK = false;
 		}
-		if (key == 'd' || key == 'D') {
+		if (keyCode == PApplet.RIGHT) {
 			this.rightK = false;
 		}
-		if (key == 'w' || key == 'W') {
+		if (keyCode == PApplet.UP) {
 			this.upK = false;
 		}
-		if (key == 's' || key == 'S') {
+		if (keyCode == PApplet.DOWN) {
 			this.downK = false;
 		}
 
@@ -78,7 +93,20 @@ public class Player extends Ship implements ProcessingInteractive {
 	public void render() {
 		parent.pushMatrix();
 		parent.translate(this.position.x, this.position.y);
-		parent.rect(0, 0, this.size.x, this.size.y);
+		parent.rotate(this.heading);
+		super.render();
 		parent.popMatrix();
+	}
+
+	@Override
+	public void mousePressed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+		// TODO Auto-generated method stub
+		
 	}
 }

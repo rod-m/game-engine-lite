@@ -2,10 +2,12 @@ package space_wars;
 
 import game_engine.GameObject;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 public class Ship extends GameObject {
+	public PVector forceDir = new PVector(0, 0);
+	public PVector velocity = new PVector(0, 0);
 
-	
 	public Ship(PApplet p) {
 		super(p);
 		// TODO Auto-generated constructor stub
@@ -25,7 +27,10 @@ public class Ship extends GameObject {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		parent.stroke(255);
+		parent.line(5, 10, 0, -10);
+		parent.line(-5, 10, 0, -10);
+		parent.line(5, 10, -5, +10);
 
 	}
 

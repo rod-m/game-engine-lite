@@ -13,7 +13,7 @@ public class Main extends PApplet {
 		launcher = new SpaceWarLaunch(this);
 	}
 	public void draw() {
-		background(0);
+  		background(0);
 		launcher.UpdateAll();
 	}
 	public void keyPressed() {

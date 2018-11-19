@@ -10,10 +10,8 @@ public abstract class GameObject implements ProcessingInterface {
 	public abstract void start();
 	public abstract void update();
 	public abstract void render();
-	public void keyPressed(char key, int keyCode) {}
-	public void keyReleased(char key, int keyCode) {}
-	public void mousePressed() {}
-	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
+	
+	
 	public GameObject(PApplet p) {
 		parent = p;
 	}
