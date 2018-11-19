@@ -69,7 +69,14 @@ public class Player extends Ship implements ProcessingInteractive {
 		if (keyCode == PApplet.DOWN) {
 			this.downK = true;
 		}
-		
+		if(key == ' ') {
+			parent.println("Fire ");
+			Bullet b = new Bullet(parent);
+			this.gameManager.addObject(b);
+			b.position = this.position.copy();
+			b.velocity.rotate(this.heading - PApplet.TWO_PI);
+			b.velocity.setMag(b.speed);
+		}
 	}
 
 	public void keyReleased(char key, int keyCode) {

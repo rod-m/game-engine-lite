@@ -13,8 +13,13 @@ public class GameManager {
         parent = p;
     }
     public void addObject(GameObject g) {
+    	g.gameManager = this;
 		gameObjects.add(g);
 	}
+    public void destroyGameObject(GameObject g) {
+    	gameObjects.remove(g);
+    	g = null; // remove garbage
+    }
     public void StartAll() {
     	for (int i = 0; i < gameObjects.size(); i++) {
 			GameObject g = gameObjects.get(i);
