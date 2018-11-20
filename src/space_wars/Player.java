@@ -2,9 +2,10 @@ package space_wars;
 
 import processing.core.PApplet;
 import game_engine.ProcessingInteractive;
+import game_engine.ShooterInterface;
 import processing.core.PVector;
 
-public class Player extends Ship implements ProcessingInteractive {
+public class Player extends Ship implements ProcessingInteractive, ShooterInterface {
 	public PVector size;
 	public float acceleration = 1.2f;
 	public float friction = 0.85f;
@@ -71,11 +72,9 @@ public class Player extends Ship implements ProcessingInteractive {
 		}
 		if(key == ' ') {
 			//parent.println("Fire ");
-			Bullet b = new Bullet(parent);
-			this.gameManager.addObject(b);
-			b.position = this.position.copy();
-			b.velocity.rotate(this.heading);
-			b.velocity.setMag(b.speed);
+			Bullet bullet = new Bullet(parent);
+			bullet.ShootIt(this);
+			this.gameManager.addObject(bullet);
 		}
 	}
 
@@ -115,5 +114,19 @@ public class Player extends Ship implements ProcessingInteractive {
 	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public PVector GetDir() {
+		// returns direction player is facing
+		PVector dir = new PVector(0,-1);
+		dir.rotate(this.heading);
+		return dir;
+	}
+
+	@Override
+	public PVector GetFrom() {
+		// returns player current position
+		return this.position.copy();
 	}
 }

@@ -1,10 +1,12 @@
 package space_wars;
 
 import game_engine.GameObject;
+import game_engine.ProjectileInterface;
+import game_engine.ShooterInterface;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-public class Bullet extends GameObject {
+public class Bullet extends GameObject implements ProjectileInterface {
 	public float speed = 12f;
 	public PVector velocity = new PVector(0, -1);
 	int lifespan = 25;
@@ -13,7 +15,11 @@ public class Bullet extends GameObject {
 		super(p);
 	}
 
-
+	public void ShootIt(ShooterInterface shooter) {
+		this.position = shooter.GetFrom();
+		this.velocity = shooter.GetDir();
+		this.velocity.setMag(this.speed);
+	}
 	@Override
 	public void update() {
 		// bullet moves in same direction as ship
@@ -21,8 +27,7 @@ public class Bullet extends GameObject {
 		if (lifespan > 0) {
 			lifespan--;
 		} else {
-			// this only removes it from the gamemanager
-			// 
+			// this will also get destroyed ~ set to null
 			this.gameManager.destroyGameObject(this);
 		
 		}
