@@ -35,5 +35,8 @@ public class GameManager {
 			g.render();
 		}
     }
+    public ArrayList<GameObject> getGameObjects() {
+    	return gameObjects;
+    }
   
 }

@@ -38,6 +38,11 @@ public class SpaceWarLaunch extends Launcher {
 	public void StartGame() {
 		player = new Player(parent, parent.width / 2, parent.height/2, 20,20);
 		this.gameManager.addObject(player);
+		for(int i = 0; i < 20; i++) {
+			DebrisObject debris = new DebrisObject(parent);
+			this.gameManager.addObject(debris);
+		}
+		
 	}
 
 }

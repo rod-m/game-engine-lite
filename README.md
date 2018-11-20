@@ -12,3 +12,8 @@ added a bullet fire mechanic to game
 Example of applying an interface.
 Bullet now implements an interface called 'ProjectileInterface'
 Player implements ShooterInterface
+
+# sprint-004
+Added some debris to shoot at. 
+Added size vector to GameObject and a boolen hitAble to filter what to check for collisions. 
+The bullet checks all gameobjects that are hittable and destroys them.

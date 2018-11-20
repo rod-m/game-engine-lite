@@ -6,7 +6,7 @@ import game_engine.ShooterInterface;
 import processing.core.PVector;
 
 public class Player extends Ship implements ProcessingInteractive, ShooterInterface {
-	public PVector size;
+	
 	public float acceleration = 1.2f;
 	public float friction = 0.85f;
 	public float maxSpeed = 5f;
@@ -19,7 +19,8 @@ public class Player extends Ship implements ProcessingInteractive, ShooterInterf
 	public Player(PApplet p, float x, float y, float w, float h) {
 		super(p);
 		this.position = new PVector(x, y);
-		this.size = new PVector(w, h);
+		this.size.x = w;
+		this.size.y = h;
 	}
 
 	@Override
